@@ -451,10 +451,10 @@ body {
 }
 
 .nonHomeBanner{
-    display: flex;
-    align-items: center;
-    height: 90vh;
-    max-height: 975px;
+    /* display: flex; */
+    /* align-items: center; */
+    /* height: 90vh; */
+    /* max-height: 975px; */
     min-height: 675px;
     text-align: center;
     background-image: url('./assets/geo.jpg');

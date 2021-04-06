@@ -88,14 +88,41 @@
   <div class="site-bd">
     <div class="site-bd-section">
       <div class="nonHomeBanner">
-        <div class="heroBanner-content u-constrainer">
-          <div class="heroBanner-content-hd">
-            <h1 class="hdg hdg_1">Snack Voting</h1>
-          </div>
-          <div class="heroBanner-content-bd">
-            <p class="copy">
-              Vote on the snacks you want to see in this month's rotation
-            </p>
+        <div class="heroBanner-content-hd">
+          
+        </div>
+        <div class="heroBanner-content-bd">
+          <h1 class="hdg hdg_1">Snack Voting</h1>
+          <p class="copy">
+            Vote on the snacks you want to see in this month's rotation
+          </p>
+          <p class="copy">
+            VOTES REMAINING: {{voteCount}}
+          </p>
+          
+
+          <div class="cardContent">
+            <div fxLayout="row wrap">
+              <ng-container *ngFor="let Snack of snackSelectionList">
+                <mat-card class="snackCard">
+                  <div class="title">{{ Snack.brand }}</div>
+                  <img
+                    mat-card-image
+                    class="productImage"
+                    src="{{ Snack.image }}"
+                    alt=""
+                  />
+                  <mat-card-content>
+                    <p class="cardProductName">{{ Snack.product }}</p>
+                    <p class="cardTextContent">{{ Snack.description }}</p>
+                    <p class="cardProductName">Total votes: {{ Snack.votes }}</p>
+                  </mat-card-content>
+                  <mat-card-actions>
+                    <button class="btn" (click)="registerVote()" style="background-color: rgb(9, 61, 109); border-radius: 8px !important;"><a >Cast Vote</a></button>
+                  </mat-card-actions>
+                </mat-card>
+              </ng-container>
+            </div>
           </div>
         </div>
       </div>
