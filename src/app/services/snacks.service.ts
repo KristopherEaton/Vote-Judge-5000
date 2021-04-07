@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +7,6 @@ import { HttpClient } from '@angular/common/http';
 export class SnacksService {
   nodePort = "http://localhost:3000";
   snackName: string;
-  constructor(private http: HttpClient) { }
-
-  getSnackInfo(){}
+  const headers = new 
 
 }

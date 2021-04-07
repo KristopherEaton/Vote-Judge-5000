@@ -118,7 +118,7 @@
                     <p class="cardProductName">Total votes: {{ Snack.votes }}</p>
                   </mat-card-content>
                   <mat-card-actions>
-                    <button class="btn" (click)="registerVote()" style="background-color: rgb(9, 61, 109); border-radius: 8px !important;"><a >Cast Vote</a></button>
+                    <button class="btn" (click)="registerVote(Snack.id)" style="background-color: rgb(9, 61, 109); border-radius: 8px !important;"><a >Cast Vote for item: {{Snack.id}}</a></button>
                   </mat-card-actions>
                 </mat-card>
               </ng-container>
