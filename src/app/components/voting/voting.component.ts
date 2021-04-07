@@ -59,7 +59,7 @@ export class VotingComponent implements OnInit {
       Authorization: 'Bearer 33b55673-57c7-413f-83ed-5b4ae8d18827',
     });
     this.http
-      .post('http://localhost:3000/snacks/vote{snackId}', { headers: headers }).subscribe(response => {
+      .post('https://localhost:3000/snacks/vote{snackId}', { headers: headers }).subscribe(response => {
         console.log(4,response)
       });
     this.trackVotes();
