@@ -95,9 +95,12 @@ export class VotingComponent implements OnInit {
           this.localStorage.store('vote', this.voteNumber);
           this.localStorage.store(this.recordNum.toString(), true);
           //post attempt
+          const headers = new HttpHeaders({
+            Authorization: 'Bearer 33b55673-57c7-413f-83ed-5b4ae8d18827',
+          });
           this.http
-            .post('https://localhost:3000/snacks/vote{snackId}', {
-              vote: 1,
+            .post('https://localhost:3000/snacks/vote{snackId}', { headers: headers }, {
+              
             })
             .subscribe(
               (data) => {
