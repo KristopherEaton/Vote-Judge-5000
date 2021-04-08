@@ -71,7 +71,7 @@ export class VotingComponent implements OnInit {
     
       this.localStorage.store('vote',this.voteNumber)
     
-    console.log(5, this.localStorage.)
+    console.log(5, this.localStorage)
     console.log('voted for:', snackId);
     
     const headers = new HttpHeaders({
