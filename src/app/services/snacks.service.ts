@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class SnacksService {
   nodePort = "http://localhost:3000";
-  snackName: string;
-  const headers = new 
-  // was more simple to throw direct in code, as code length was minimal
+  
+  
+  // was more simple to throw code directly in component instead , as code length was veeeeery minimal
 }

@@ -8,9 +8,13 @@ import { VotingComponent } from './components/voting/voting.component';
 const routes: Routes = [
    
   { path: 'home', component: HomeComponent },
+  
   { path: 'current', component: CurrentComponent },
+  
   { path: 'signup', component: SignupComponent },
+  
   { path: 'voting', component: VotingComponent },
+  
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   
 ];
