@@ -88,19 +88,18 @@
   <div class="site-bd">
     <div class="site-bd-section">
       <div class="nonHomeBanner">
-        <div class="heroBanner-content-hd">
-          
-        </div>
+        <div class="heroBanner-content-hd"></div>
         <div class="heroBanner-content-bd">
           <h1 class="hdg hdg_1">Snack Voting</h1>
           <p class="copy">
             Vote on the snacks you want to see in this month's rotation
           </p>
-          <p class="copy">
-            VOTES REMAINING: {{voteCount}}
-          </p>
-          
-
+          <br>
+          <div class="vote_background">
+            <p class="copy">YOUR VOTES REMAINING: {{ voteCount }}</p>
+          </div>
+          <br />
+          <h1 class="hdg hdg_1">All snacks to choose from:</h1>
           <div class="cardContent">
             <div fxLayout="row wrap">
               <ng-container *ngFor="let Snack of snackSelectionList">
@@ -115,16 +114,28 @@
                   <mat-card-content>
                     <p class="cardProductName">{{ Snack.product }}</p>
                     <p class="cardTextContent">{{ Snack.description }}</p>
-                    <p class="cardProductName">Total votes: {{ Snack.votes }}</p>
+                    <p class="cardProductName">
+                      Current total votes: {{ Snack.votes }}
+                    </p>
                   </mat-card-content>
                   <mat-card-actions>
-                    <button class="btn" (click)="registerVote(Snack.id)" style="background-color: rgb(9, 61, 109); border-radius: 8px !important;"><a >Cast Vote for item: {{Snack.id}}</a></button>
+                    <button
+                      class="btn"
+                      (click)="registerVote(Snack.id)"
+                      style="
+                        background-color: rgb(9, 61, 109);
+                        border-radius: 8px !important;
+                      "
+                    >
+                      <a>Cast Vote for this item</a>
+                    </button>
                   </mat-card-actions>
                 </mat-card>
               </ng-container>
             </div>
           </div>
         </div>
+        <br>
       </div>
     </div>
   </div>

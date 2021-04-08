@@ -88,33 +88,62 @@
   <div class="site-bd">
     <div class="site-bd-section">
       <div class="nonHomeBanner">
-        <div class="heroBanner-content u-constrainer">
-          <div class="heroBanner-content-hd">
-            <h1 class="hdg hdg_1">Current selection</h1>
+        <div class="heroBanner-content-hd"></div>
+        <div class="heroBanner-content-bd">
+          <h1 class="hdg hdg_1">List of snacks available by OCD!</h1>
+          <p class="copy">
+            Listed in order of votes, head over to the voting page to vote for
+            next month's selection!
+          </p>
+
+          <br />
+          <h1 class="hdg hdg_1">The top 3 snacks in rotation:</h1>
+          <div class="placement_container_box">
+            <h2 class="placeidentifiers" style="padding: 20px">1st place!!</h2>
           </div>
-          <div class="heroBanner-content-bd">
-            <p class="copy">
-              Here are the snacks that are available in the Nerdery kitchen now
-              <!-- Cards across screen -->
-              <mat-card class="snack-card">
-                <mat-card-header>
-                  <div mat-card-avatar class="snack-image"></div>
-                  <!-- <mat-card-title></mat-card-title>
-                  <mat-card-subtitle></mat-card-subtitle> -->
-                </mat-card-header>
-                <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-                <mat-card-content>
-                  <p>
-                    This snack is the best!
-                  </p>
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button>LIKE</button>
-                  <button mat-button>SHARE</button>
-                </mat-card-actions>
-              </mat-card>
-            </p>
+
+          <div class="cards_container_box">
+            <div class="cardContent">
+              <div fxLayout="row wrap">
+                <ng-container *ngFor="let Snack of snackSelectionList">
+                  <mat-card class="snackCard">
+                    <img
+                      mat-card-image
+                      class="productImage"
+                      src="{{ Snack.image }}"
+                      alt=""
+                    />
+                    <div class="basic_name_background">
+                      <div
+                        class="title"
+                        style="font-size: 20px !important; padding: 5%"
+                      >
+                        {{ Snack.product }}
+                      </div>
+                    </div>
+                    <mat-card-content>
+                      <br />
+
+                      <br />
+                      <div class="description">
+                        <p>Description:</p>
+                        <br />
+                        <p class="cardTextContent">
+                          {{ Snack.description }} Brought to you by
+                          {{ Snack.brand }}!
+                        </p>
+                        <br />
+                      </div>
+                      <p class="cardProductName">
+                        Current total votes: {{ Snack.votes }}
+                      </p>
+                    </mat-card-content>
+                  </mat-card>
+                </ng-container>
+              </div>
+            </div>
           </div>
+          <br>
         </div>
       </div>
     </div>

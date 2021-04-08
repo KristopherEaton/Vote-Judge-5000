@@ -47,9 +47,7 @@
   border-width: 2px;
 }
 
-.heroBanner-content-bd{
 
-}
 
 .voteCounter {
   border-radius: 12px;
@@ -70,4 +68,15 @@
   border-radius: 12px;
   border-width: 3px;
   border-style: solid;
+}
+
+.vote_background{
+  max-width: 90%;
+  background-color: rgb(9, 61, 109);
+  text-align: center;
+  border-radius: 18px;
+  border-style: solid;
+  border-width: 2px;
+  margin-left: 40%;
+  margin-right: 40%;
 }

@@ -13,6 +13,7 @@ export class CurrentComponent implements OnInit {
   dateTime = new Date();
   firstVoteCastDate: any;
   snackSelectionList: Snack[] = [];
+  snackVoteSortedList: Snack [] = [];
   snackObject1: Snack;
   snackObject2: Snack;
   snackObject3: Snack;
@@ -24,17 +25,18 @@ export class CurrentComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.showSnack()
+    this.getSnackDataFilterTop3();
+    
+    
   }
 
-  showSnack(){
+  getSnackDataFilterTop3() {
     const headers = new HttpHeaders({
       Authorization: 'Bearer 33b55673-57c7-413f-83ed-5b4ae8d18827',
     });
     this.http
       .get('http://localhost:3000/snacks', { headers: headers })
       .subscribe((response: Response) => {
-        
         this.snackObject1 = response[0];
         this.snackSelectionList.push(this.snackObject1);
         this.snackObject2 = response[1];
@@ -47,9 +49,21 @@ export class CurrentComponent implements OnInit {
         this.snackSelectionList.push(this.snackObject5);
         this.snackObject6 = response[5];
         this.snackSelectionList.push(this.snackObject6);
+        // Sort by votes
+        this.snackSelectionList.sort((a, b) => {
+          if (a.votes < b.votes) {
+            return 1;
+          } else if (a.votes > b.votes) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+
+        //reduce length
+        this.snackSelectionList.length = 3;
         console.log(2, this.snackSelectionList);
-      }); 
-      this.snackSelectionList.sort((a,b)=>(a.votes - b.votes));
-      console.log('sorted?', this.snackSelectionList);
+      });
   }
+
 }

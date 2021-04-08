@@ -13,6 +13,7 @@ export class VotingComponent implements OnInit {
   dateTime = new Date();
   firstVoteCastDate: any;
   snackSelectionList: Snack[] = [];
+  snackSelectionListReduced: Snack[] = [];
   snackObject1: Snack;
   snackObject2: Snack;
   snackObject3: Snack;
@@ -25,17 +26,16 @@ export class VotingComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.getSnackData();
+    this.listAllSnacks();
   }
 
-  getSnackData() {
+  listAllSnacks() {
     const headers = new HttpHeaders({
       Authorization: 'Bearer 33b55673-57c7-413f-83ed-5b4ae8d18827',
     });
     this.http
       .get('http://localhost:3000/snacks', { headers: headers })
       .subscribe((response: Response) => {
-        
         this.snackObject1 = response[0];
         this.snackSelectionList.push(this.snackObject1);
         this.snackObject2 = response[1];
@@ -48,24 +48,37 @@ export class VotingComponent implements OnInit {
         this.snackSelectionList.push(this.snackObject5);
         this.snackObject6 = response[5];
         this.snackSelectionList.push(this.snackObject6);
-        console.log(2, this.snackSelectionList);
+        
+        // sort(a, b,){
+        //   const aLetter = a.replace(a.brand,"");
+        //   if ((a.brand > b.brand) && (a.id < b.id)) {
+        //     return 1;
+        //   } else if ((a.brand < b.brand)&&(a.id > b.id)) {
+        //     return -1;
+        //   } else {
+        //     return 0;
+        //   }
+        // };
+        console.log(this.snackSelectionList);
+        
       });
   }
   // not finished
   registerVote(snackId): void {
-    console.log('voted for:',snackId);
+    console.log('voted for:', snackId);
     this.vote = 1;
     const headers = new HttpHeaders({
       Authorization: 'Bearer 33b55673-57c7-413f-83ed-5b4ae8d18827',
     });
     this.http
-      .post('https://localhost:3000/snacks/vote{snackId}', { headers: headers }).subscribe(response => {
-        console.log(4,response)
+      .post('https://localhost:3000/snacks/vote{snackId}', { headers: headers })
+      .subscribe((response) => {
+        console.log(4, response);
       });
     this.trackVotes();
   }
   //not finished
-  trackVotes():void {
+  trackVotes(): void {
     if (this.voteCount >= 1) {
       this.firstVoteCastDate = this.dateTime;
       this.voteCount = this.voteCount - 1;
