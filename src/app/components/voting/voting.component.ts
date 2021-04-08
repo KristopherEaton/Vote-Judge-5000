@@ -27,7 +27,7 @@ export class VotingComponent implements OnInit {
   voteButtonEnabled = true;
   recordNum: number;
   displayMaintenanceMessage = false;
-  oneVote= 1;
+  oneVote = 1;
 
   constructor(
     private http: HttpClient,
@@ -94,8 +94,20 @@ export class VotingComponent implements OnInit {
           this.voteNumber = this.currentVoteCount + 1;
           this.localStorage.store('vote', this.voteNumber);
           this.localStorage.store(this.recordNum.toString(), true);
-          
-          this.assignVote(snackId, this.oneVote);
+          //post attempt
+          this.http
+            .post('https://localhost:3000/snacks/vote{snackId}', {
+              vote: 1,
+            })
+            .subscribe(
+              (data) => {
+                console.log('Post freakin worked!', data);
+              },
+              (error) => {
+                console.log('Error', error);
+              }
+            );
+          this.assignVote(this.recordNum, this.oneVote);
           alert(
             `Your first vote has been cast! You have 2 more votes you can cast within this month.`
           );
@@ -104,7 +116,8 @@ export class VotingComponent implements OnInit {
           this.voteNumber = this.currentVoteCount + 1;
           this.localStorage.store('vote', this.voteNumber);
           this.localStorage.store(this.recordNum.toString(), true);
-          this.assignVote(snackId, this.oneVote);
+
+          // this.assignVote(snackId, this.oneVote);
           alert('You have now cast 2 votes total, use your last one wisely');
         }
         if (this.currentVoteCount == 2) {
@@ -142,10 +155,19 @@ export class VotingComponent implements OnInit {
     const headers = new HttpHeaders({
       Authorization: 'Bearer 33b55673-57c7-413f-83ed-5b4ae8d18827',
     });
-    
-  
+
     this.http
-      .post('https://localhost:3000/snacks/vote{snackId}', vote).subscribe();
+      .post('https://localhost:3000/snacks/vote{snackId}', {
+        vote: 1,
+      })
+      .subscribe(
+        (data) => {
+          console.log('Post freakin worked!', data);
+        },
+        (error) => {
+          console.log('Error', error);
+        }
+      );
   }
 
   getInitialVoteStatus(): void {
