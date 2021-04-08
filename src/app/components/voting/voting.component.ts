@@ -9,8 +9,7 @@ import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
   styleUrls: ['./voting.component.css'],
 })
 export class VotingComponent implements OnInit {
-  voteCount = 3;
-  totalvoteCount: number;
+  
   dateTime = new Date();
   firstVoteCastDate: any;
   snackSelectionList: Snack[] = [];
@@ -24,14 +23,18 @@ export class VotingComponent implements OnInit {
   snackItem: Snack;
   voteNumber= 0;
   voteLimiter = 4;
+  currentVoteCount: number;
+  votesRemaining= 3 ;
+  voteButtonEnabled= true;
   
   constructor(private http: HttpClient,private localStorage:LocalStorageService) {}
 
   ngOnInit(): void {
     this.listAllSnacks();
-    this.localStorage.observe('voteCount').subscribe((value)=> console.log('current value',value))
+    this.getInitialVoteStatus();
   }
 
+  //create list of snack available for voting
   listAllSnacks() {
     const headers = new HttpHeaders({
       Authorization: 'Bearer 33b55673-57c7-413f-83ed-5b4ae8d18827',
@@ -62,18 +65,43 @@ export class VotingComponent implements OnInit {
             return 0;
           }
         });
-        console.log(this.snackSelectionList);
-        
+        console.log(this.snackSelectionList);    
       });
   }
-  // not finished
-  registerVote(snackId): void {
+
+  // Storing vote count in browser
+  countTotalVote(snackId): void {
+    if((this.currentVoteCount < 3) &&  (this.currentVoteCount < 1) ){
+      this.voteNumber = (this.currentVoteCount + 1);
+      this.localStorage.store('vote',this.voteNumber);
+      this.firstVoteCastDate = new Date();
+      alert(
+        `Your first vote has been cast on: ${this.firstVoteCastDate}. You have 2 more votes you can cast within the next 30 days.`
+      );
+    }if(this.currentVoteCount == 1){
+      this.voteNumber = (this.currentVoteCount + 1);
+      this.localStorage.store('vote',this.voteNumber);
+      alert("You have now cast 2 votes total, use your last one wisely");
+    }if(this.currentVoteCount == 2){
+      this.voteNumber = (this.currentVoteCount + 1);
+      this.localStorage.store('vote',this.voteNumber);
+      alert("You have just cast your LAST VOTE. Keep an eye on the snacks to see if yours are put into rotation!")
+    }if(this.currentVoteCount == 3){
+      alert("YOU ARE NOW OUT OF VOTES");
+    }
+    // Simple function to keep vote tally correct
+    const browserStorageOfVotes = this.localStorage.retrieve('vote');
+    this.currentVoteCount = browserStorageOfVotes;
+    this.votesRemaining = 3 - this.currentVoteCount;
     
-      this.localStorage.store('vote',this.voteNumber)
-    
-    console.log(5, this.localStorage)
-    console.log('voted for:', snackId);
-    
+    // logs for info
+    console.log("votes remaining:",this.votesRemaining);
+    console.log("Current number of registered votes:", this.currentVoteCount);
+    console.log('voted for product: #', snackId);
+  }
+  
+  //update value in server
+  assignVote(): void {
     const headers = new HttpHeaders({
       Authorization: 'Bearer 33b55673-57c7-413f-83ed-5b4ae8d18827',
     });
@@ -82,19 +110,11 @@ export class VotingComponent implements OnInit {
       .subscribe((response) => {
         console.log(4, response);
       });
-    this.trackVotes();
   }
-  //not finished
-  trackVotes(): void {
-    if (this.voteCount >= 1) {
-      this.firstVoteCastDate = this.dateTime;
-      this.voteCount = this.voteCount - 1;
-      alert(
-        `You have 2 more votes starting from this date: ${this.firstVoteCastDate}`
-      );
-    } else {
-      alert('You have no more votes to cast!');
-    }
+
+  getInitialVoteStatus(): void {
+    const browserStorageOfVotes = this.localStorage.retrieve('vote');
+    this.currentVoteCount = browserStorageOfVotes;
+    this.votesRemaining = 3 - this.currentVoteCount;
   }
-  assignVote(): void {}
 }

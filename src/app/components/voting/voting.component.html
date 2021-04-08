@@ -92,12 +92,13 @@
         <div class="heroBanner-content-bd">
           <h1 class="hdg hdg_1">Snack Voting</h1>
           <p class="copy">
-            Vote on the snacks you want to see in this month's rotation
+            Vote on the snacks you want to see in this month's rotation.
           </p>
-          <br>
-          <div class="vote_background">
-            <p class="copy">YOUR VOTES REMAINING: {{ voteCount }}</p>
-          </div>
+          <p class="copy">
+            You will have total of 3 votes within a month's period.
+          </p>
+          <br />
+          
           <br />
           <h1 class="hdg hdg_1">All snacks to choose from:</h1>
           <div class="cardContent">
@@ -118,24 +119,31 @@
                       Current total votes: {{ Snack.votes }}
                     </p>
                   </mat-card-content>
+
                   <mat-card-actions>
-                    <button
-                      class="btn"
-                      (click)="registerVote(Snack.id)"
-                      style="
-                        background-color: rgb(9, 61, 109);
-                        border-radius: 8px !important;
-                      "
-                    >
-                      <a>Cast Vote for this item</a>
-                    </button>
+                    
+                      <button
+                        class="btn"
+                        (click)="countTotalVote(Snack.id)"
+                        style="
+                          background-color: rgb(9, 61, 109);
+                          border-radius: 8px !important;
+                        "
+                      >
+                        <h1>CAST VOTE FOR ITEM</h1>
+                        <br>
+                        <a>Your votes remaining: {{ this.votesRemaining }}</a>
+                      
+                      </button>
+                    <br>
+                      
                   </mat-card-actions>
                 </mat-card>
               </ng-container>
             </div>
           </div>
         </div>
-        <br>
+        <br />
       </div>
     </div>
   </div>
