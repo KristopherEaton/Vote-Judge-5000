@@ -26,6 +26,8 @@ export class VotingComponent implements OnInit {
   currentVoteCount: number;
   votesRemaining= 3 ;
   voteButtonEnabled= true;
+  recordNum: number;
+
   
   constructor(private http: HttpClient,private localStorage:LocalStorageService) {}
 
@@ -71,33 +73,44 @@ export class VotingComponent implements OnInit {
 
   // Storing vote count in browser
   countTotalVote(snackId): void {
+    this.recordNum = snackId;   
+    const browserStorageOfIds = this.localStorage.retrieve(snackId.toString());
+    console.log(88, browserStorageOfIds);
+    const browserStorageOfVotes = this.localStorage.retrieve('vote');
+    if(browserStorageOfVotes !== 3){
+    // start
+     
+    if (browserStorageOfIds !== true){
     if((this.currentVoteCount < 3) &&  (this.currentVoteCount < 1) ){
       this.voteNumber = (this.currentVoteCount + 1);
       this.localStorage.store('vote',this.voteNumber);
-      this.firstVoteCastDate = new Date();
+      this.localStorage.store(this.recordNum.toString(), true);
       alert(
-        `Your first vote has been cast on: ${this.firstVoteCastDate}. You have 2 more votes you can cast within the next 30 days.`
+        `Your first vote has been cast! You have 2 more votes you can cast within this month.`
       );
-    }if(this.currentVoteCount == 1){
+    }if((this.currentVoteCount == 1)){
       this.voteNumber = (this.currentVoteCount + 1);
       this.localStorage.store('vote',this.voteNumber);
+      this.localStorage.store(this.recordNum.toString(), true);
       alert("You have now cast 2 votes total, use your last one wisely");
     }if(this.currentVoteCount == 2){
       this.voteNumber = (this.currentVoteCount + 1);
       this.localStorage.store('vote',this.voteNumber);
+      this.localStorage.store(this.recordNum.toString(), true);
       alert("You have just cast your LAST VOTE. Keep an eye on the snacks to see if yours are put into rotation!")
-    }if(this.currentVoteCount == 3){
-      alert("YOU ARE NOW OUT OF VOTES");
     }
     // Simple function to keep vote tally correct
     const browserStorageOfVotes = this.localStorage.retrieve('vote');
     this.currentVoteCount = browserStorageOfVotes;
     this.votesRemaining = 3 - this.currentVoteCount;
-    
     // logs for info
     console.log("votes remaining:",this.votesRemaining);
     console.log("Current number of registered votes:", this.currentVoteCount);
     console.log('voted for product: #', snackId);
+  } else {
+    alert('You have already voted for that snack, try again!')
+  }
+  }else{alert("YOU ARE NOW OUT OF VOTES! Sorry! Your voting priveleges will be restored next month! ")}
   }
   
   //update value in server
