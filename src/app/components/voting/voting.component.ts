@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Snack } from '../../models/Snack';
+import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 
 @Component({
   selector: 'app-voting',
@@ -21,12 +22,14 @@ export class VotingComponent implements OnInit {
   snackObject5: Snack;
   snackObject6: Snack;
   snackItem: Snack;
-  vote: number;
-
-  constructor(private http: HttpClient) {}
+  voteNumber= 0;
+  voteLimiter = 4;
+  
+  constructor(private http: HttpClient,private localStorage:LocalStorageService) {}
 
   ngOnInit(): void {
     this.listAllSnacks();
+    this.localStorage.observe('voteCount').subscribe((value)=> console.log('current value',value))
   }
 
   listAllSnacks() {
@@ -49,24 +52,28 @@ export class VotingComponent implements OnInit {
         this.snackObject6 = response[5];
         this.snackSelectionList.push(this.snackObject6);
         
-        // sort(a, b,){
-        //   const aLetter = a.replace(a.brand,"");
-        //   if ((a.brand > b.brand) && (a.id < b.id)) {
-        //     return 1;
-        //   } else if ((a.brand < b.brand)&&(a.id > b.id)) {
-        //     return -1;
-        //   } else {
-        //     return 0;
-        //   }
-        // };
+        this.snackSelectionList.sort((a, b,) => {
+          if ((a.brand && a.votes) <= (b.brand && b.votes) ) {
+            return 1;  
+          } 
+          else if ((a.brand && a.votes) >= (b.brand && b.votes)) {
+            return -1;
+          }else {
+            return 0;
+          }
+        });
         console.log(this.snackSelectionList);
         
       });
   }
   // not finished
   registerVote(snackId): void {
+    
+      this.localStorage.store('vote',this.voteNumber)
+    
+    console.log(5, this.localStorage.)
     console.log('voted for:', snackId);
-    this.vote = 1;
+    
     const headers = new HttpHeaders({
       Authorization: 'Bearer 33b55673-57c7-413f-83ed-5b4ae8d18827',
     });

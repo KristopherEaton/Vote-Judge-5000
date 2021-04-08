@@ -7,7 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
-
+import {NgxWebstorageModule} from 'ngx-webstorage';
 import { CurrentComponent } from './components/current/current.component';
 import { VotingComponent } from './components/voting/voting.component';
 import { SignupComponent } from './components/signup/signup.component';
@@ -29,6 +29,7 @@ import { HomeComponent } from './components/home/home.component';
     MatButtonModule,
     FlexLayoutModule,
     HttpClientModule,
+    NgxWebstorageModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
